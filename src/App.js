@@ -129,6 +129,58 @@ function App() {
             Submit
           </button>
         </div>
+
+        {/* For Filter */}
+        <div
+          style={{
+            border: "solid 1px black",
+            margin: "0 40px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexWrap: "wrap",
+          }}
+        >
+          <span style={{ margin: "0 15px" }}>Filter</span>
+          <div>
+            Area{" "}
+            <select
+              onChange={handleChange}
+              style={{ border: "solid 0.1em black", margin: "1em" }}
+            >
+              <option value="All">All</option>
+              <option value="Thane">Thane</option>
+              <option value="Pune">Pune</option>
+              <option value="Mumbai Suburban">Mumbai Suburban</option>
+              <option value="Nashik">Nashik</option>
+              <option value="Nagpur">Nagpur</option>
+              <option value="Ahmednagar">Ahmednagar</option>
+              <option value="Solapur">Solapur</option>
+            </select>
+          </div>
+          <div>
+            Category
+            <select style={{ border: "solid 0.1em black", margin: "1em" }}>
+              {" "}
+              <option value="All">All</option>
+              <option value="Grocery">Grocery</option>
+              <option value="Butcher">Butcher</option>
+              <option value="Baker">Baker</option>
+              <option value="Chemist">Chemist</option>
+              <option value="Stationery Shop">Stationery Shop</option>
+            </select>
+          </div>
+
+          <div>
+            Status
+            <select style={{ border: "solid 0.1em black", margin: "1em" }}>
+              {" "}
+              <option value="Open">Open</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+        </div>
+
         <div
           style={{
             display: "flex",
