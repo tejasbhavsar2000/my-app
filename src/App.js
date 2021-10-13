@@ -1,14 +1,16 @@
 import React from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
+
 import { useDispatch, useSelector } from "react-redux";
-import { add, selectshops } from "./features/counter/counterSlice";
+import { add, selectshops } from "./features/shop/shopSlice";
 import ShopCard from "./components/ShopCard";
 
 function App() {
   const shops = useSelector(selectshops);
 
   const dispatch = useDispatch();
+
   const [shop, setShop] = React.useState({
     name: "",
     area: "default",
@@ -16,7 +18,6 @@ function App() {
     start: "",
     end: "",
   });
-
   function checkDate(start, end) {
     if (Date.parse(start) < Date.parse(end)) {
       return true;
@@ -28,14 +29,13 @@ function App() {
   function handleChange(event) {
     event.preventDefault();
     const { name, value } = event.target;
-
     setShop({ ...shop, [name]: value });
-    console.log(shop);
   }
 
   return (
     <div className="App">
       <Navbar />
+
       <main
         style={{
           minHeight: "100vh",
@@ -60,7 +60,7 @@ function App() {
             name="name"
             value={shop.name}
             placeholder="Shop Name"
-            style={{ border: "solid 0.2em black", margin: "1em" }}
+            style={{ border: "solid 0.1em black", margin: "1em" }}
             required
           />
 
@@ -70,19 +70,19 @@ function App() {
             placeholder="Select Area"
             id="area"
             name="area"
-            style={{ border: "solid 0.2em black", margin: "1em" }}
+            style={{ border: "solid 0.1em black", margin: "1em" }}
             required
           >
             <option value="default" selected>
               Select Area
             </option>
-            <option value="thane">Thane</option>
-            <option value="pune">Pune</option>
-            <option value="mumbai">Mumbai Suburban</option>
-            <option value="nashik">Nashik</option>
-            <option value="nagpur">Nagpur</option>
-            <option value="ahmed">Ahmednagar</option>
-            <option value="solapur">Solapur</option>
+            <option value="Thane">Thane</option>
+            <option value="Pune">Pune</option>
+            <option value="Mumbai Suburban">Mumbai Suburban</option>
+            <option value="Nashik">Nashik</option>
+            <option value="Nagpur">Nagpur</option>
+            <option value="Ahmednagar">Ahmednagar</option>
+            <option value="Solapur">Solapur</option>
           </select>
 
           <label style={{ margin: "1em" }}>Category</label>
@@ -90,15 +90,15 @@ function App() {
             id="category"
             name="category"
             onChange={handleChange}
-            style={{ border: "solid 0.2em black", margin: "1em" }}
+            style={{ border: "solid 0.1em black", margin: "1em" }}
             required
           >
             <option value="default">Select Category</option>
-            <option value="grocery">Grocery</option>
-            <option value="butcher">Buthcer</option>
-            <option value="baker">Baker</option>
-            <option value="chemist">Chemist</option>
-            <option value="stationery">Stationery Shop</option>
+            <option value="Grocery">Grocery</option>
+            <option value="Butcher">Butcher</option>
+            <option value="Baker">Baker</option>
+            <option value="Chemist">Chemist</option>
+            <option value="Stationery Shop">Stationery Shop</option>
           </select>
 
           <label style={{ margin: "1em" }}>Start Date</label>
@@ -138,17 +138,17 @@ function App() {
           }}
         >
           {console.log(shops)}
-          {shops.map((item) => {
+          {shops.map((item, index) => {
             return (
               <ShopCard
+                id={index}
+                key={index}
                 name={item.name}
                 area={item.area}
                 category={item.category}
                 startDate={item.start}
                 endDate={item.end}
-              >
-                {" "}
-              </ShopCard>
+              ></ShopCard>
             );
           })}
         </div>

@@ -1,8 +1,18 @@
-import { Image } from "@chakra-ui/image";
 import { Box, Heading, Text } from "@chakra-ui/layout";
+import { useDispatch, useSelector } from "react-redux";
+import { del, selectshops } from "../features/shop/shopSlice";
+export default function ShopCard({
+  id,
+  name,
+  area,
+  category,
+  startDate,
+  endDate,
+}) {
+  const shops = useSelector(selectshops);
 
-export default function ShopCard({ name, area, category, startDate, endDate }) {
-  var myArray = [
+  const dispatch = useDispatch();
+  var colourArray = [
     "tomato",
     "red",
     "yellow",
@@ -12,7 +22,10 @@ export default function ShopCard({ name, area, category, startDate, endDate }) {
     "black",
   ];
 
-  var randomItem = myArray[Math.floor(Math.random() * myArray.length)];
+  var randomItem = colourArray[Math.floor(Math.random() * colourArray.length)];
+  // function deleteShop() {
+  //   console.log(id);
+  // }
   return (
     <Box
       maxW="sm"
@@ -22,7 +35,7 @@ export default function ShopCard({ name, area, category, startDate, endDate }) {
       overflow="hidden"
       margin="1"
     >
-      <Box m="5" as="a" href="/blog-post-thing">
+      <Box m="5" as="a">
         <Heading m="5" mb="0" as="h4" size="md">
           {name}
         </Heading>
@@ -33,6 +46,8 @@ export default function ShopCard({ name, area, category, startDate, endDate }) {
           {category}
         </Text>
         <Text m="5" mt="0">
+          Start Date - End Date
+          <br />
           {`${startDate} - ${endDate}`}
         </Text>
         <button
@@ -44,6 +59,7 @@ export default function ShopCard({ name, area, category, startDate, endDate }) {
             padding: "0 1em",
             fontWeight: "bold",
           }}
+          onClick={() => dispatch(del(id))}
         >
           Delete
         </button>
