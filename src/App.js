@@ -10,6 +10,11 @@ function App() {
   const shops = useSelector(selectshops);
 
   const dispatch = useDispatch();
+  const [filter, setFilter] = React.useState({
+    area: "All",
+    category: "All",
+    status: "Open",
+  });
 
   const [shop, setShop] = React.useState({
     name: "",
@@ -19,7 +24,25 @@ function App() {
     end: "",
   });
   function checkDate(start, end) {
+    console.log(start);
     if (Date.parse(start) < Date.parse(end)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  function validateDate(start, end) {
+    let date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    let fullDate = `${year}-${month}-${day}`;
+
+    if (
+      Date.parse(start) < Date.parse(fullDate) &&
+      Date.parse(end) > Date.parse(fullDate)
+    ) {
       return true;
     } else {
       return false;
@@ -30,6 +53,11 @@ function App() {
     event.preventDefault();
     const { name, value } = event.target;
     setShop({ ...shop, [name]: value });
+  }
+  function handleFilterChange(event) {
+    event.preventDefault();
+    const { name, value } = event.target;
+    setFilter({ ...filter, [name]: value });
   }
 
   return (
@@ -144,7 +172,11 @@ function App() {
           <span style={{ margin: "0 15px" }}>Filter</span>
           <div>
             Area{" "}
-            <select style={{ border: "solid 0.1em black", margin: "1em" }}>
+            <select
+              name="area"
+              onChange={handleFilterChange}
+              style={{ border: "solid 0.1em black", margin: "1em" }}
+            >
               <option value="All">All</option>
               <option value="Thane">Thane</option>
               <option value="Pune">Pune</option>
@@ -157,7 +189,11 @@ function App() {
           </div>
           <div>
             Category
-            <select style={{ border: "solid 0.1em black", margin: "1em" }}>
+            <select
+              name="category"
+              onChange={handleFilterChange}
+              style={{ border: "solid 0.1em black", margin: "1em" }}
+            >
               {" "}
               <option value="All">All</option>
               <option value="Grocery">Grocery</option>
@@ -170,7 +206,11 @@ function App() {
 
           <div>
             Status
-            <select style={{ border: "solid 0.1em black", margin: "1em" }}>
+            <select
+              name="status"
+              onChange={handleFilterChange}
+              style={{ border: "solid 0.1em black", margin: "1em" }}
+            >
               {" "}
               <option value="Open">Open</option>
               <option value="Closed">Closed</option>
@@ -188,17 +228,45 @@ function App() {
         >
           {console.log(shops)}
           {shops.map((item, index) => {
-            return (
-              <ShopCard
-                id={index}
-                key={index}
-                name={item.name}
-                area={item.area}
-                category={item.category}
-                startDate={item.start}
-                endDate={item.end}
-              ></ShopCard>
-            );
+            if (
+              (item.area == filter.area || filter.area == "All") &&
+              (item.category == filter.category || filter.category == "All") &&
+              filter.status == "Open"
+            ) {
+              console.log("open");
+              if (validateDate(item.start, item.end)) {
+                return (
+                  <ShopCard
+                    id={index}
+                    key={index}
+                    name={item.name}
+                    area={item.area}
+                    category={item.category}
+                    startDate={item.start}
+                    endDate={item.end}
+                  ></ShopCard>
+                );
+              }
+            } else if (
+              (item.area == filter.area || filter.area == "All") &&
+              (item.category == filter.category || filter.category == "All") &&
+              filter.status == "Closed"
+            ) {
+              console.log("close");
+              if (!validateDate(item.start, item.end)) {
+                return (
+                  <ShopCard
+                    id={index}
+                    key={index}
+                    name={item.name}
+                    area={item.area}
+                    category={item.category}
+                    startDate={item.start}
+                    endDate={item.end}
+                  ></ShopCard>
+                );
+              }
+            }
           })}
         </div>
       </main>

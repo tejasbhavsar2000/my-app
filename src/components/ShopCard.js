@@ -29,7 +29,7 @@ export default function ShopCard({
   return (
     <Box
       maxW="sm"
-      borderColor={randomItem}
+      borderColor="black"
       borderWidth="3px"
       borderRadius="lg"
       overflow="hidden"
