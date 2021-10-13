@@ -144,10 +144,7 @@ function App() {
           <span style={{ margin: "0 15px" }}>Filter</span>
           <div>
             Area{" "}
-            <select
-              onChange={handleChange}
-              style={{ border: "solid 0.1em black", margin: "1em" }}
-            >
+            <select style={{ border: "solid 0.1em black", margin: "1em" }}>
               <option value="All">All</option>
               <option value="Thane">Thane</option>
               <option value="Pune">Pune</option>
